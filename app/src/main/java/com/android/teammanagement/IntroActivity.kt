@@ -17,5 +17,9 @@ class IntroActivity : AppCompatActivity() {
         signUpButton.setOnClickListener{
             startActivity(Intent(this, SignUpActivity::class.java))
         }
+
+        signInButton.setOnClickListener{
+            startActivity(Intent(this, SignInActivity::class.java))
+        }
     }
 }
