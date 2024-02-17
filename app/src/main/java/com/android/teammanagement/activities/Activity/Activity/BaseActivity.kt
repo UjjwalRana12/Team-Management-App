@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.android.teammanagement.R
 import com.google.android.material.snackbar.Snackbar
@@ -26,9 +27,12 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
-        tvProgress_text=findViewById(R.id.tvprogressText)
+
     }
 
+    protected fun setToolbar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+    }
     fun showProgressDialogue(text:String){
         mPregressDialogue= Dialog(this)
 
@@ -59,12 +63,13 @@ open class BaseActivity : AppCompatActivity() {
         }, 2000) // Delay in milliseconds
     }
 
-    fun showErrorSnackBar(message: String){
-        val snackBar= Snackbar.make(findViewById(androidx.appcompat.R.id.content),
-            message, Snackbar.LENGTH_LONG)
-        val snackBarView=snackBar.view
+    fun showErrorSnackBar(message: String) {
+        val rootView = window.decorView.rootView
+        val snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
+        val snackBarView = snackBar.view
         snackBarView.setBackgroundColor(ContextCompat.getColor(this, R.color.snackBarColor))
         snackBar.show()
     }
+
 
 }

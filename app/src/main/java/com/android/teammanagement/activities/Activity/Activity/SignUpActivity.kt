@@ -8,8 +8,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+
 import com.android.teammanagement.R
-class SignUpActivity : AppCompatActivity() {
+import com.google.android.material.snackbar.Snackbar
+
+
+class SignUpActivity : BaseActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var etName: EditText
@@ -22,6 +27,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         // Find views
+
         toolbar = findViewById(R.id.signUp_toolbar)
         etName = findViewById(R.id.etname)
         etEmail = findViewById(R.id.etemail)
@@ -30,10 +36,14 @@ class SignUpActivity : AppCompatActivity() {
 
         // Set up action bar
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24)
+        val actionBar = supportActionBar
+        if(actionBar!=null) {
+
+               actionBar.setDisplayHomeAsUpEnabled(true)
+               actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24)
+
         }
+
 
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
@@ -76,7 +86,6 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun showErrorSnackBar(message: String) {
-        Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
-    }
+
+
 }
