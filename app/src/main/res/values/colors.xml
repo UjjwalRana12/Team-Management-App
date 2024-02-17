@@ -9,5 +9,6 @@
 
     <color name="text_color_primary">#1A1C1E</color>
     <color name="text_color_secondary">#0C0C0C</color>
+    <color name="snackBarColor">#F10909</color>
 
 </resources>

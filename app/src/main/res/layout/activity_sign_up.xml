@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".activities.Activity.Activity.SignUpActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/signUp_toolbar"
@@ -57,7 +57,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/etname"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -68,36 +68,37 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/etemail"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:hint="EMAIL"
-                app:layout_constraintEnd_toEndOf="@+id/editText2"
+                app:layout_constraintEnd_toEndOf="@+id/etname"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editText2"
-                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+                app:layout_constraintStart_toStartOf="@+id/etname"
+                app:layout_constraintTop_toBottomOf="@+id/etname" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/etpassword"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:hint="PASSWORD"
-                app:layout_constraintEnd_toEndOf="@+id/editText"
+                app:layout_constraintEnd_toEndOf="@+id/etemail"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editText"
-                app:layout_constraintTop_toBottomOf="@+id/editText" />
+                app:layout_constraintStart_toStartOf="@+id/etemail"
+                app:layout_constraintTop_toBottomOf="@+id/etemail" />
 
             <Button
+                android:id="@+id/btn_signup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="signup"
                 android:backgroundTint="@color/color_primary"
-                app:layout_constraintEnd_toEndOf="@+id/editText3"
-                app:layout_constraintStart_toStartOf="@+id/editText3"
-                app:layout_constraintTop_toBottomOf="@+id/editText3" />
+                app:layout_constraintEnd_toEndOf="@+id/etpassword"
+                app:layout_constraintStart_toStartOf="@+id/etpassword"
+                app:layout_constraintTop_toBottomOf="@+id/etpassword" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

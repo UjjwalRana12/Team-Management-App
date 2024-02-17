@@ -1,9 +1,12 @@
-package com.android.teammanagement
+package com.android.teammanagement.activities.Activity.Activity
+
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.android.teammanagement.R
+
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var signInButton: Button

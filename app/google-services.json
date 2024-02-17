@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298537123045",
+    "project_id": "team-management-e8cc1",
+    "storage_bucket": "team-management-e8cc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298537123045:android:386e82bc827ac35a49680c",
+        "android_client_info": {
+          "package_name": "com.android.teammanagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGuvQ4JeEJ0iwfyrwy0MM9cDsE9oN-FCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

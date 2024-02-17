@@ -1,10 +1,11 @@
-package com.android.teammanagement
+package com.android.teammanagement.activities.Activity.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import com.android.teammanagement.R
 
 
 class SplashActivity : AppCompatActivity() {
@@ -17,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         Handler().postDelayed({
-        startActivity(Intent(this,IntroActivity::class.java))
+        startActivity(Intent(this, IntroActivity::class.java))
             finish()
         },2500)
     }
