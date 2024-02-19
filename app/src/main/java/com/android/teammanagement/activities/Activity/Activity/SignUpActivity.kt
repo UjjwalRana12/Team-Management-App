@@ -2,16 +2,16 @@
 package com.android.teammanagement.activities.Activity.Activity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 
 import com.android.teammanagement.R
-import com.google.android.material.snackbar.Snackbar
+import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
+import com.android.teammanagement.activities.Activity.models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 class SignUpActivity : BaseActivity() {
@@ -59,12 +59,20 @@ class SignUpActivity : BaseActivity() {
         val password: String = etPassword.text.toString().trim()
 
         if (validateForm(name, email, password)) {
-            // Perform user registration here
-            Toast.makeText(
-                this@SignUpActivity,
-                "Now you can register a new user",
-                Toast.LENGTH_SHORT
-            ).show()
+            showProgressDialogue("Please wait...")
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+               // hideProgressDialogue()
+                if (task.isSuccessful) {
+                    val firebaseUser: FirebaseUser = task.result!!.user!!
+                    val registeredEmail = firebaseUser.email!!
+                    val user= User(firebaseUser.uid,name,registeredEmail)
+                    FirestoreClass().registerUser(this,user)
+                } else
+
+                    Toast.makeText(this, "registration failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, task.exception!!.message, Toast.LENGTH_SHORT).show()
+
+            }
         }
     }
 
@@ -86,6 +94,13 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
+        fun userRegisteredSuccess(){
+            Toast.makeText(this, "you have sucessfully registered", Toast.LENGTH_SHORT).show()
+            hideProgressDialogue()
+            FirebaseAuth.getInstance().signOut()
+            finish()
+
+        }
 
 
 }
