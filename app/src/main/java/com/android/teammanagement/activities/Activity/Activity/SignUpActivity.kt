@@ -49,7 +49,6 @@ class SignUpActivity : BaseActivity() {
 
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        // Set click listener for signup button
         btnSignup.setOnClickListener {
             registerUser()
         }
@@ -71,11 +70,11 @@ class SignUpActivity : BaseActivity() {
                     FirestoreClass().registerUser(this,user)
                     startActivity(Intent(this,MainActivity::class.java))
 
-                } else
+                } else {
                     hideProgressDialogue()
                     Toast.makeText(this, "registration failed", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, task.exception!!.message, Toast.LENGTH_SHORT).show()
-
+                    Toast.makeText(this, task.exception!!.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

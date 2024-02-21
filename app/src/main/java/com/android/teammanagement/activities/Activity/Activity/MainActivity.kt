@@ -1,31 +1,40 @@
 package com.android.teammanagement.activities.Activity.Activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.android.teammanagement.R
+import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
+import com.android.teammanagement.activities.Activity.models.User
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListener {
     lateinit var toolbar_main_activity: Toolbar
     lateinit var nav_view: NavigationView
+    lateinit var nav_user_image:ImageView
+    lateinit var tv_username: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
         nav_view=findViewById(R.id.nav_view)
+        nav_user_image=findViewById(R.id.nav_user_image)
+        tv_username=findViewById(R.id.tv_username)
         setupActionBar()
 
         nav_view.setNavigationItemSelectedListener(this)
+        FirestoreClass().signInUser(this)
     }
 
     private fun setupActionBar() {
@@ -76,7 +85,17 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         return true
 }
 
+fun updateNavigationUserDetails(user: User){
+    Glide
+        .with(this)
+        .load(user.image)
+        .centerCrop()
+        .placeholder(R.drawable.profile)
+        .into(nav_user_image);
 
+    tv_username.text=user.name
+
+}
 
 
 }
