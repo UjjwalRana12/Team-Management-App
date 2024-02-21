@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.User
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -95,11 +96,10 @@ class SignUpActivity : BaseActivity() {
     }
 
         fun userRegisteredSuccess(){
-            Toast.makeText(this, "you have sucessfully registered", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "you have sucessfully registered", Toast.LENGTH_LONG).show()
             hideProgressDialogue()
             FirebaseAuth.getInstance().signOut()
             finish()
-
         }
 
 

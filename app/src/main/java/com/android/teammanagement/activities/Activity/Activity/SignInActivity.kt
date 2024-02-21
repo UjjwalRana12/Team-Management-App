@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.android.teammanagement.R
+import com.android.teammanagement.activities.Activity.models.User
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : BaseActivity() {
@@ -87,5 +88,10 @@ class SignInActivity : BaseActivity() {
             }
             else -> true
         }
+    }
+    fun signInSuccess(user: () -> User){
+        hideProgressDialogue()
+        startActivity(Intent(this,MainActivity::class.java))
+        finish()
     }
 }

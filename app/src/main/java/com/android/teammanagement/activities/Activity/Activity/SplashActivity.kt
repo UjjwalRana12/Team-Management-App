@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.android.teammanagement.R
+import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 
 
 class SplashActivity : AppCompatActivity() {
@@ -18,7 +19,12 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         Handler().postDelayed({
-        startActivity(Intent(this, IntroActivity::class.java))
+            var currentUserID=FirestoreClass().getCurrentUserId()
+            if (currentUserID.isNotEmpty()) {
+                startActivity(Intent(this,MainActivity::class.java))
+            }else{
+                startActivity(Intent(this, IntroActivity::class.java))
+            }
             finish()
         },2500)
     }
