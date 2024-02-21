@@ -12,6 +12,7 @@
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar
+
             android:id="@+id/toolbar_mainActivity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -19,5 +20,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </com.google.android.material.appbar.AppBarLayout>
+<include layout="@layout/main_content"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
