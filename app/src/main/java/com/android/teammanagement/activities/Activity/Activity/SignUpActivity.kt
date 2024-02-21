@@ -1,5 +1,6 @@
 
 package com.android.teammanagement.activities.Activity.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
@@ -27,7 +28,7 @@ class SignUpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        // Find views
+
 
         toolbar = findViewById(R.id.signUp_toolbar)
         etName = findViewById(R.id.etname)
@@ -62,14 +63,16 @@ class SignUpActivity : BaseActivity() {
         if (validateForm(name, email, password)) {
             showProgressDialogue("Please wait...")
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-               // hideProgressDialogue()
+
                 if (task.isSuccessful) {
                     val firebaseUser: FirebaseUser = task.result!!.user!!
                     val registeredEmail = firebaseUser.email!!
                     val user= User(firebaseUser.uid,name,registeredEmail)
                     FirestoreClass().registerUser(this,user)
-                } else
+                    startActivity(Intent(this,MainActivity::class.java))
 
+                } else
+                    hideProgressDialogue()
                     Toast.makeText(this, "registration failed", Toast.LENGTH_SHORT).show()
                 Toast.makeText(this, task.exception!!.message, Toast.LENGTH_SHORT).show()
 
