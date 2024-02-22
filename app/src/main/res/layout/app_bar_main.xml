@@ -6,13 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/myappBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar
-
             android:id="@+id/toolbar_mainActivity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

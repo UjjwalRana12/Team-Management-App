@@ -13,6 +13,7 @@ import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.User
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,13 +27,16 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val appBarLayout = findViewById<ConstraintLayout>(R.id.appBarLayout)
-        val toolbar_main_activity = appBarLayout.findViewById<Toolbar>(R.id.toolbar_mainActivity)
+        val appBarLayout = findViewById<AppBarLayout>(R.id.myappBarLayout)
+        toolbar_main_activity = appBarLayout.findViewById<Toolbar>(R.id.toolbar_mainActivity)
+        val navView = findViewById<NavigationView>(R.id.nav_view)
+        val headerView = navView.getHeaderView(0)
+      // toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
 
-//        toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
+
         nav_view=findViewById(R.id.nav_view)
-        nav_user_image=findViewById(R.id.nav_user_image)
-        tv_username=findViewById(R.id.tv_username)
+        nav_user_image=headerView.findViewById(R.id.nav_user_image)
+        tv_username=headerView.findViewById(R.id.tv_username)
         setupActionBar()
 
         nav_view.setNavigationItemSelectedListener(this)
