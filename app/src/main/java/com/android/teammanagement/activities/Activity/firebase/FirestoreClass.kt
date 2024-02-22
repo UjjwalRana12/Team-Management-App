@@ -3,6 +3,7 @@ package com.android.teammanagement.activities.Activity.firebase
 import android.app.Activity
 import android.util.Log
 import com.android.teammanagement.activities.Activity.Activity.MainActivity
+import com.android.teammanagement.activities.Activity.Activity.MyProfileActivity
 import com.android.teammanagement.activities.Activity.Activity.SignInActivity
 import com.android.teammanagement.activities.Activity.Activity.SignUpActivity
 import com.android.teammanagement.activities.Activity.models.User
@@ -38,7 +39,7 @@ class FirestoreClass {
         return currentUserID
             }
 // yeh or kahi bhi use hona chaiye kuch error h
-    fun signInUser(activity: Activity){
+    fun loadUserData(activity: Activity){
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .get().addOnSuccessListener {document->
@@ -51,6 +52,9 @@ class FirestoreClass {
                     is MainActivity->{
                         activity.updateNavigationUserDetails(loggedInUser)
                 }
+                    is MyProfileActivity->{
+                        activity.setUserDatInUI(loggedInUser)
+                    }
 
             }
 

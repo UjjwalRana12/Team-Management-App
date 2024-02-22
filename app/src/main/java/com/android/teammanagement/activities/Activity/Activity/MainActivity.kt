@@ -1,14 +1,12 @@
 package com.android.teammanagement.activities.Activity.Activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.android.teammanagement.R
@@ -27,14 +25,18 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
+
+        val appBarLayout = findViewById<ConstraintLayout>(R.id.appBarLayout)
+        val toolbar_main_activity = appBarLayout.findViewById<Toolbar>(R.id.toolbar_mainActivity)
+
+//        toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
         nav_view=findViewById(R.id.nav_view)
         nav_user_image=findViewById(R.id.nav_user_image)
         tv_username=findViewById(R.id.tv_username)
         setupActionBar()
 
         nav_view.setNavigationItemSelectedListener(this)
-        FirestoreClass().signInUser(this)
+        FirestoreClass().loadUserData(this)
     }
 
     private fun setupActionBar() {
@@ -70,7 +72,8 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         val drawer_layout = findViewById<DrawerLayout>(R.id.drawer_layout)
         when(item.itemId){
             R.id.nav_my_profile->{
-                Toast.makeText(this@MainActivity,"My Profile", Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(this@MainActivity,"My Profile", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this,MyProfileActivity::class.java))
             }
             R.id.nav_sign_out->{
                 FirebaseAuth.getInstance().signOut()
@@ -86,6 +89,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 }
 
 fun updateNavigationUserDetails(user: User){
+
     Glide
         .with(this)
         .load(user.image)

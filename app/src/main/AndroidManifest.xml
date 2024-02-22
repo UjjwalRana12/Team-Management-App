@@ -13,6 +13,13 @@
         android:theme="@style/Theme.TeamManagement"
         tools:targetApi="31">
         <activity
+            android:name=".activities.Activity.Activity.MyProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.TeamManagement">
+
+        </activity>
+        <activity
             android:name=".activities.Activity.Activity.BaseActivity"
             android:exported="false" />
         <activity
@@ -49,7 +56,10 @@
         </activity>
         <activity
             android:name=".activities.Activity.Activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.TeamManagement"
+            >
 
         </activity>
     </application>
