@@ -37,7 +37,9 @@
             android:layout_height="match_parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_user_image"
+                android:background="@drawable/profile"
+                android:id="@+id/iv_profile_user_image"
+                android:clickable="true"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:elevation="15dp"
@@ -54,9 +56,9 @@
                 android:ems="10"
                 android:inputType="text"
                 android:hint="Name"
-                app:layout_constraintEnd_toEndOf="@+id/iv_user_image"
-                app:layout_constraintStart_toStartOf="@+id/iv_user_image"
-                app:layout_constraintTop_toBottomOf="@+id/iv_user_image" />
+                app:layout_constraintEnd_toEndOf="@+id/iv_profile_user_image"
+                app:layout_constraintStart_toStartOf="@+id/iv_profile_user_image"
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile_user_image" />
 
             <EditText
                 android:id="@+id/et_email_pro"
@@ -88,11 +90,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_email_pro" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Button"
+                android:text="UPDATE"
                 android:backgroundTint="@color/color_primary"
                 app:layout_constraintEnd_toEndOf="@+id/et_phone_pro"
                 app:layout_constraintStart_toStartOf="@+id/et_phone_pro"

@@ -2,6 +2,7 @@ package com.android.teammanagement.activities.Activity.firebase
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import com.android.teammanagement.activities.Activity.Activity.MainActivity
 import com.android.teammanagement.activities.Activity.Activity.MyProfileActivity
 import com.android.teammanagement.activities.Activity.Activity.SignInActivity
@@ -39,6 +40,27 @@ class FirestoreClass {
         return currentUserID
             }
 // yeh or kahi bhi use hona chaiye kuch error h
+
+
+
+    fun updateUserProfileData(activity: MyProfileActivity,userHashMap:HashMap<String,Any>){
+        mFirestore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName,"profile data updated successfully")
+                Toast.makeText(activity, "Updated profile", Toast.LENGTH_LONG).show()
+                activity.profileUpdateSuccess()
+            }.addOnFailureListener {
+                e->
+                activity.hideProgressDialogue()
+                Log.i(activity.javaClass.simpleName,"error while creating a board",e)
+                Toast.makeText(activity, "error while updating the profile", Toast.LENGTH_LONG).show()
+
+
+
+            }
+    }
     fun loadUserData(activity: Activity){
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
