@@ -36,23 +36,28 @@
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_primary"
-                android:textSize="24sp"
+                android:textColor="@color/text_color_primary"
+                android:textSize="15sp"
                 android:layout_marginStart="2dp"
                 tools:text="Board name" />
             <TextView
                 android:id="@+id/tv_created_by"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_secondary"
+                android:textColor="@color/text_color_primary"
                 android:layout_marginStart="2dp"
 
-                android:textSize="24sp"
+                android:textSize="15sp"
                 tools:text="created by"/>
 
 
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2sp"
+        android:background="@color/text_color_primary"/>
 
 </LinearLayout>
