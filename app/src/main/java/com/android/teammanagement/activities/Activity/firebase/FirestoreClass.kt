@@ -14,6 +14,7 @@ import com.android.teammanagement.activities.Activity.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.toObject
 
 class FirestoreClass {
     private  val mFirestore = FirebaseFirestore.getInstance()
@@ -63,6 +64,29 @@ class FirestoreClass {
             }
     }
 
+    fun getBoardsList(activity: MainActivity){
+        mFirestore.collection(Constants.BOARDS)
+            .whereArrayContains(Constants.ASSIGNED_TO,getCurrentUserId())
+            .get()
+            .addOnSuccessListener {
+                document->
+                Log.i(activity.javaClass.simpleName,document.documents.toString())
+                val boardList:ArrayList<Board> = ArrayList()
+
+                for(i in document.documents){
+                    val board=i.toObject(Board::class.java)!!
+                    board.documentId=i.id
+                    boardList.add(board)
+                }
+
+                activity.populateBoardsListToUI(boardList)
+            }.addOnFailureListener { e->
+                activity.hideProgressDialogue()
+                Log.e(activity.javaClass.simpleName,"error while createing board",e)
+
+            }
+    }
+
     fun createBoard(activity: CreateBoardActivity,board: Board){
         mFirestore.collection(Constants.BOARDS)
             .document()
@@ -77,7 +101,7 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName,"error while creating a board")
             }
     }
-    fun loadUserData(activity: Activity){
+    fun loadUserData(activity: Activity,readBoardsList:Boolean = false){
         mFirestore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .get().addOnSuccessListener {document->
@@ -88,7 +112,7 @@ class FirestoreClass {
                         activity.signInSuccess{loggedInUser}
                     }
                     is MainActivity->{
-                        activity.updateNavigationUserDetails(loggedInUser)
+                        activity.updateNavigationUserDetails(loggedInUser,readBoardsList)
                 }
                     is MyProfileActivity->{
                         activity.setUserDatInUI(loggedInUser)

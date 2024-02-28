@@ -5,14 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.teammanagement.R
+import com.android.teammanagement.activities.Activity.adapters.BoardItemsAdapter
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
+import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
 import com.bumptech.glide.Glide
@@ -26,6 +31,8 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     lateinit var nav_view: NavigationView
     lateinit var nav_user_image:ImageView
     lateinit var tv_username: TextView
+    lateinit var rv_boards_list:RecyclerView
+    lateinit var tv_no_boards_available: TextView
     lateinit var fab_create_board:FloatingActionButton
 
 
@@ -42,6 +49,8 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         fab_create_board=findViewById(R.id.fab_create_board)
         toolbar_main_activity = appBarLayout.findViewById<Toolbar>(R.id.toolbar_mainActivity)
         val navView = findViewById<NavigationView>(R.id.nav_view)
+        rv_boards_list=findViewById(R.id.rv_boards_list)
+        tv_no_boards_available=findViewById(R.id.tv_no_boards_available)
         val headerView = navView.getHeaderView(0)
       // toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
 
@@ -52,12 +61,30 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         setupActionBar()
 
         nav_view.setNavigationItemSelectedListener(this)
-        FirestoreClass().loadUserData(this)
+        FirestoreClass().loadUserData(this,true)
 
         fab_create_board.setOnClickListener{
             val intent = Intent(this,CreateBoardActivity::class.java)
             intent.putExtra(Constants.NAME , mUserName)
             startActivity(intent)
+        }
+    }
+
+    fun populateBoardsListToUI(boardsList:ArrayList<Board>){
+        hideProgressDialogue()
+        if(boardsList.size>0){
+            rv_boards_list.visibility= View.VISIBLE
+            tv_no_boards_available.visibility= View.GONE
+
+            rv_boards_list.layoutManager=LinearLayoutManager(this)
+            rv_boards_list.setHasFixedSize(true)
+
+            val adapter=BoardItemsAdapter(this,boardsList)
+            rv_boards_list.adapter=adapter
+        }
+        else{
+            rv_boards_list.visibility= View.GONE
+            tv_no_boards_available.visibility= View.VISIBLE
         }
     }
 
@@ -120,7 +147,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         return true
 }
 
-fun updateNavigationUserDetails(user: User){
+fun updateNavigationUserDetails(user: User,readBoardsList: Boolean){
 
     mUserName=user.name
 
@@ -132,6 +159,11 @@ fun updateNavigationUserDetails(user: User){
         .into(nav_user_image);
 
     tv_username.text=user.name
+
+    if(readBoardsList){
+        showProgressDialogue("please wait...")
+        FirestoreClass().getBoardsList(this)
+    }
 
 }
 
