@@ -16,6 +16,7 @@ import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.User
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -24,6 +25,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     lateinit var nav_view: NavigationView
     lateinit var nav_user_image:ImageView
     lateinit var tv_username: TextView
+    lateinit var fab_create_board:FloatingActionButton
 
 
     companion object{
@@ -34,6 +36,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         setContentView(R.layout.activity_main)
 
         val appBarLayout = findViewById<AppBarLayout>(R.id.myappBarLayout)
+        fab_create_board=findViewById(R.id.fab_create_board)
         toolbar_main_activity = appBarLayout.findViewById<Toolbar>(R.id.toolbar_mainActivity)
         val navView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navView.getHeaderView(0)
@@ -47,6 +50,10 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
         nav_view.setNavigationItemSelectedListener(this)
         FirestoreClass().loadUserData(this)
+
+        fab_create_board.setOnClickListener{
+            startActivity(Intent(this,CreateBoardActivity::class.java))
+        }
     }
 
     private fun setupActionBar() {

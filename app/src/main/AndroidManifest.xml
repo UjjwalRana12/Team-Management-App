@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
     <application
@@ -17,12 +19,16 @@
         android:theme="@style/Theme.TeamManagement"
         tools:targetApi="31">
         <activity
+            android:name=".activities.Activity.Activity.CreateBoardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.TeamManagement"/>
+
+        <activity
             android:name=".activities.Activity.Activity.MyProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement">
-
-        </activity>
+            android:theme="@style/Base.Theme.TeamManagement"></activity>
         <activity
             android:name=".activities.Activity.Activity.BaseActivity"
             android:exported="false" />
@@ -30,23 +36,17 @@
             android:name=".activities.Activity.Activity.SignInActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement">
-
-        </activity>
+            android:theme="@style/Base.Theme.TeamManagement"></activity>
         <activity
             android:name=".activities.Activity.Activity.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement">
-
-        </activity>
+            android:theme="@style/Base.Theme.TeamManagement"></activity>
         <activity
             android:name=".activities.Activity.Activity.IntroActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement">
-
-        </activity>
+            android:theme="@style/Base.Theme.TeamManagement"></activity>
         <activity
             android:name=".activities.Activity.Activity.SplashActivity"
             android:exported="true"
@@ -62,10 +62,7 @@
             android:name=".activities.Activity.Activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"
-            >
-
-        </activity>
+            android:theme="@style/Base.Theme.TeamManagement"></activity>
     </application>
 
 </manifest>

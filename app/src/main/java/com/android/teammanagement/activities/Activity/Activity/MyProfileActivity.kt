@@ -22,6 +22,8 @@ import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
+import com.android.teammanagement.activities.Activity.utils.Constants.READ_STORAGE_PERMISSION_CODE
+
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -29,11 +31,7 @@ import java.io.IOException
 
 class MyProfileActivity : BaseActivity() {
 
-    companion object {
-        private const val READ_STORAGE_PERMISSION_CODE = 1
-        private const val PICK_IMAGE_REQUEST_CODE = 2
 
-    }
 
     lateinit var my_pro_toolbar: Toolbar
     lateinit var iv_profile_user_image: ImageView
@@ -67,7 +65,7 @@ class MyProfileActivity : BaseActivity() {
                     Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
 
-                showImageChoser()
+               Constants.showImageChoser(this)
             }
             else {
                 ActivityCompat.requestPermissions(
@@ -75,15 +73,18 @@ class MyProfileActivity : BaseActivity() {
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     READ_STORAGE_PERMISSION_CODE
                 )
-                    btn_update.setOnClickListener {
-                        if(mSelectedImageFileUri!=null){
-                            uploadUserImage()
-                        }
-                        else {
-                            showProgressDialogue("please wait")
-                            updateUserProfileData()
-                        }
-                    }
+
+            }
+
+        }
+
+        btn_update.setOnClickListener {
+            if(mSelectedImageFileUri!=null){
+                uploadUserImage()
+            }
+            else {
+                showProgressDialogue("please wait")
+                updateUserProfileData()
             }
         }
 
@@ -98,11 +99,30 @@ class MyProfileActivity : BaseActivity() {
         if (requestCode == READ_STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("Permission", "Read storage permission granted")
-                showImageChoser()
+                Constants.showImageChoser(this)
             }
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
             Log.d("Permission", "Read storage permission denied")
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == Constants.PICK_IMAGE_REQUEST_CODE && data!!.data != null) {
+            mSelectedImageFileUri = data.data
+            try {
+                Glide
+                    .with(this@MyProfileActivity)
+                    .load(mSelectedImageFileUri)
+                    .centerCrop()
+                    .placeholder(R.drawable.profile)
+                    .into(iv_profile_user_image)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+
         }
     }
 
@@ -120,31 +140,9 @@ class MyProfileActivity : BaseActivity() {
     }
 
 
-    private fun showImageChoser() {
-
-        var galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
-        Log.d("Permission", "image choser is triggered")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_REQUEST_CODE && data!!.data != null) {
-            mSelectedImageFileUri = data.data
-            try {
-                Glide
-                    .with(this@MyProfileActivity)
-                    .load(mSelectedImageFileUri)
-                    .centerCrop()
-                    .placeholder(R.drawable.profile)
-                    .into(iv_profile_user_image)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
 
 
-        }
-    }
+
 
     fun setUserDatInUI(user: User) {
 
@@ -185,7 +183,7 @@ class MyProfileActivity : BaseActivity() {
         if (mSelectedImageFileUri!=null) {
             val sRef:StorageReference=FirebaseStorage.getInstance()
                 .reference.child("USER_IMAGE"+System.currentTimeMillis()+
-                        "."+getFileExtension(mSelectedImageFileUri))
+                        "."+Constants.getFileExtension(this,mSelectedImageFileUri))
 
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener{
                 taskSnapshot->
@@ -209,10 +207,7 @@ class MyProfileActivity : BaseActivity() {
         }
 
     }
-    private fun getFileExtension(uri: Uri?): String?{
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri!!))
 
-    }
 
     fun profileUpdateSuccess(){
         hideProgressDialogue()
