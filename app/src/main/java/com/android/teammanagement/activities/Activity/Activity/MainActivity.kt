@@ -38,7 +38,8 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
 
     companion object{
-        const val MY_PROFILE_REQUEST_CODE:Int=11
+        const val MY_PROFILE_REQUEST_CODE:Int =11
+        const val CREATE_BOARD_REQUEST_CODE:Int =12
     }
     private lateinit var mUserName:String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +67,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         fab_create_board.setOnClickListener{
             val intent = Intent(this,CreateBoardActivity::class.java)
             intent.putExtra(Constants.NAME , mUserName)
-            startActivity(intent)
+            startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
         }
     }
 
@@ -121,6 +122,8 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode== Activity.RESULT_OK && requestCode== MY_PROFILE_REQUEST_CODE){
             FirestoreClass().loadUserData(this)
+        }else if(resultCode== Activity.RESULT_OK && requestCode== CREATE_BOARD_REQUEST_CODE){
+            FirestoreClass().getBoardsList(this)
         }
         else
             Log.e("cancelled", "cancelled")
