@@ -1,7 +1,9 @@
 package com.android.teammanagement.activities.Activity.Activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +25,10 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     lateinit var nav_user_image:ImageView
     lateinit var tv_username: TextView
 
+
+    companion object{
+        const val MY_PROFILE_REQUEST_CODE:Int=11
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,12 +78,22 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode== Activity.RESULT_OK && requestCode== MY_PROFILE_REQUEST_CODE){
+            FirestoreClass().loadUserData(this)
+        }
+        else
+            Log.e("cancelled", "cancelled")
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val drawer_layout = findViewById<DrawerLayout>(R.id.drawer_layout)
         when(item.itemId){
             R.id.nav_my_profile->{
               //  Toast.makeText(this@MainActivity,"My Profile", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this,MyProfileActivity::class.java))
+                startActivityForResult(
+                    Intent(this,MyProfileActivity::class.java),
+                    MY_PROFILE_REQUEST_CODE)
             }
             R.id.nav_sign_out->{
                 FirebaseAuth.getInstance().signOut()

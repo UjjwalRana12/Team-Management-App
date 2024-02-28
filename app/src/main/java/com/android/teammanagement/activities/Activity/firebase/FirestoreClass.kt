@@ -39,7 +39,6 @@ class FirestoreClass {
         }
         return currentUserID
             }
-// yeh or kahi bhi use hona chaiye kuch error h
 
 
 
