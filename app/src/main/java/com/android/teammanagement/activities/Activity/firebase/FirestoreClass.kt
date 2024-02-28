@@ -3,10 +3,12 @@ package com.android.teammanagement.activities.Activity.firebase
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
+import com.android.teammanagement.activities.Activity.Activity.CreateBoardActivity
 import com.android.teammanagement.activities.Activity.Activity.MainActivity
 import com.android.teammanagement.activities.Activity.Activity.MyProfileActivity
 import com.android.teammanagement.activities.Activity.Activity.SignInActivity
 import com.android.teammanagement.activities.Activity.Activity.SignUpActivity
+import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -58,6 +60,21 @@ class FirestoreClass {
 
 
 
+            }
+    }
+
+    fun createBoard(activity: CreateBoardActivity,board: Board){
+        mFirestore.collection(Constants.BOARDS)
+            .document()
+            .set(board, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName,"Board Created successfully")
+                Toast.makeText(activity,"Board Created successfully", Toast.LENGTH_LONG).show()
+                activity.boardCreatedSuccessfully()
+            }.addOnFailureListener {
+                exception ->
+                activity.hideProgressDialogue()
+                Log.e(activity.javaClass.simpleName,"error while creating a board")
             }
     }
     fun loadUserData(activity: Activity){

@@ -10,7 +10,7 @@ import com.android.teammanagement.activities.Activity.Activity.MyProfileActivity
 
 object Constants {
     const val USERS:String="users"
-
+    const val BOARDS:String="boards"
     const val IMAGE:String="image"
     const val NAME:String="name"
     const val MOBILE:String="mobile"
@@ -21,8 +21,8 @@ object Constants {
      fun showImageChoser(activity: Activity) {
 
         var galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-       activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
-        Log.d("Permission", "image choser is triggered")
+        activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
+        Log.d("Permission", "image chooser is triggered")
     }
 
      fun getFileExtension(activity: Activity,uri: Uri?): String?{

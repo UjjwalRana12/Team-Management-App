@@ -8,31 +8,48 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.android.teammanagement.R
+import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
+import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.utils.Constants
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.IOException
 
-class CreateBoardActivity : AppCompatActivity() {
+class CreateBoardActivity : BaseActivity() {
     private var mSelectedImageFileUri: Uri? = null
     private lateinit var cb_toolbar:Toolbar
+    private lateinit var et_board_name:EditText
+    private lateinit var btn_board_name: Button
     private lateinit var iv_board_image: ImageView
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private lateinit var mUserName: String
+    private var  mBoardImageURL: String = ""
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_board)
         iv_board_image=findViewById(R.id.iv_board_image)
+        et_board_name=findViewById(R.id.et_board_name)
+        btn_board_name=findViewById(R.id.btn_board_name)
         cb_toolbar=findViewById(R.id.toolbar_create_board_activity)
         setupActionBar()
 
+        if(intent.hasExtra(Constants.NAME)){
+            mUserName= intent.getStringExtra(Constants.NAME)!!
+
+        }
+
         iv_board_image.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this,
+            if(ContextCompat.checkSelfPermission(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED){
 
                 Constants.showImageChoser(this)
             }
@@ -46,8 +63,63 @@ class CreateBoardActivity : AppCompatActivity() {
             }
         }
 
-
+        btn_board_name.setOnClickListener {
+            if(mSelectedImageFileUri!=null){
+                uploadBoardImage()
+            }
+            else{
+                showProgressDialogue("Please Wait")
+            createBoard()
+            }
+        }
     }
+
+    private fun createBoard(){
+       val assignedUsersArrayList:ArrayList<String> = ArrayList()
+       assignedUsersArrayList.add(getCurrentUserId())
+
+        var board = Board(
+            et_board_name.text.toString(),
+            mBoardImageURL,
+            mUserName,
+            assignedUsersArrayList
+        )
+        FirestoreClass().createBoard(this,board)
+    }
+
+
+        private fun uploadBoardImage(){
+            showProgressDialogue("Please Wait...")
+            val sRef: StorageReference = FirebaseStorage.getInstance()
+                .reference.child("BOARD_IMAGE"+System.currentTimeMillis()+
+                        "."+Constants.getFileExtension(this,mSelectedImageFileUri))
+
+            sRef.putFile(mSelectedImageFileUri!!)
+                .addOnSuccessListener{
+                    taskSnapshot->
+                Log.i("Board Image Url",
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
+
+                taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                        uri ->
+                    Log.e("Downloadable Image Url",uri.toString())
+                    mBoardImageURL=uri.toString()
+
+                    createBoard()
+
+                }
+            }.addOnFailureListener{
+                    exception->
+                Toast.makeText(this,exception.message, Toast.LENGTH_SHORT).show()
+                hideProgressDialogue()
+            }
+        }
+    fun boardCreatedSuccessfully(){
+        hideProgressDialogue()
+        finish()
+    }
+
+
 
     private fun setupActionBar() {
         setSupportActionBar(cb_toolbar)

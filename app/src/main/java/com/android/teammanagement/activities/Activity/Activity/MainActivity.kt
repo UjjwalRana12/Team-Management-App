@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.User
+import com.android.teammanagement.activities.Activity.utils.Constants
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,9 +29,11 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     lateinit var fab_create_board:FloatingActionButton
 
 
+
     companion object{
         const val MY_PROFILE_REQUEST_CODE:Int=11
     }
+    private lateinit var mUserName:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,7 +55,9 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         FirestoreClass().loadUserData(this)
 
         fab_create_board.setOnClickListener{
-            startActivity(Intent(this,CreateBoardActivity::class.java))
+            val intent = Intent(this,CreateBoardActivity::class.java)
+            intent.putExtra(Constants.NAME , mUserName)
+            startActivity(intent)
         }
     }
 
@@ -116,6 +121,8 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 }
 
 fun updateNavigationUserDetails(user: User){
+
+    mUserName=user.name
 
     Glide
         .with(this)
