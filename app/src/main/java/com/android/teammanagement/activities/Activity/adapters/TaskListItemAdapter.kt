@@ -1,5 +1,6 @@
 package com.android.teammanagement.activities.Activity.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -39,6 +40,7 @@ open class TaskListItemAdapter(
        return list.size
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val model = list[position]
         if(holder is MyViewHolder){
@@ -73,6 +75,28 @@ open class TaskListItemAdapter(
                 }
                 else{
                     Toast.makeText(context,"pleaase enter list name", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            holder.itemView.findViewById<ImageButton>(R.id.ib_edit_list_name).setOnClickListener{
+                holder.itemView.findViewById<EditText>(R.id.et_edit_task_list_name).setText(model.title)
+                holder.itemView.findViewById<LinearLayout>(R.id.ll_text_view).visibility=View.GONE
+                holder.itemView.findViewById<CardView>(R.id.cv_edit_task_list_name).visibility=View.VISIBLE
+            }
+            holder.itemView.findViewById<ImageButton>(R.id.ib_close_editable_view).setOnClickListener{
+                holder.itemView.findViewById<LinearLayout>(R.id.ll_text_view).visibility=View.VISIBLE
+                holder.itemView.findViewById<CardView>(R.id.cv_edit_task_list_name).visibility=View.GONE
+            }
+
+            holder.itemView.findViewById<ImageButton>(R.id.ib_done_edit_list_name).setOnClickListener{
+               val listName = holder.itemView.findViewById<EditText>(R.id.et_edit_task_list_name).text.toString()
+                if (listName.isNotEmpty()){
+                    if (context is TaskListActivtiy){
+                        context.updateTaskList(position,listName,model)
+                    }
+                }
+                else{
+                    Toast.makeText(context,"please enter list name", Toast.LENGTH_LONG).show()
                 }
             }
         }
