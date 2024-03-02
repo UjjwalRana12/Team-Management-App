@@ -39,7 +39,7 @@ open class TaskListItemAdapter(
         if(holder is MyViewHolder){
             if(position==list.size - 1){
                 holder.itemView.findViewById<TextView>(R.id.tv_add_task_list).visibility=View.VISIBLE
-                holder.itemView.findViewById<TextView>(R.id.ll_task_item).visibility=View.GONE
+                holder.itemView.findViewById<LinearLayout>(R.id.ll_task_item).visibility=View.GONE
             }
             else{
                 holder.itemView.findViewById<TextView>(R.id.tv_add_task_list).visibility=View.GONE
