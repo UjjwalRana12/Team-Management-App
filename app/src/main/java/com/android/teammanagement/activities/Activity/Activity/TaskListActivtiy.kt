@@ -16,6 +16,7 @@ import com.android.teammanagement.activities.Activity.utils.Constants
 class TaskListActivtiy : BaseActivity() {
     lateinit var toolbar_task_list: Toolbar
     lateinit var rv_task_list: RecyclerView
+    private lateinit var  mBoardDetails: Board
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,21 +32,24 @@ class TaskListActivtiy : BaseActivity() {
         FirestoreClass().getBoardDetails(this, boardDocumentId)
     }
 
-    private fun setupActionBar(title: String) {
+    private fun setupActionBar() {
         setSupportActionBar(toolbar_task_list)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24)
-            actionBar.title = title
+            actionBar.title = mBoardDetails.name
         }
         toolbar_task_list.setNavigationOnClickListener {
             onBackPressed()
         }
     }
     fun boardDetails(board: Board){
+
+        mBoardDetails=board
+
         hideProgressDialogue()
-        setupActionBar(board.name)
+        setupActionBar()
 
         val addtaskList = Task("add list")
         board.taskList.add(addtaskList)
@@ -56,5 +60,21 @@ class TaskListActivtiy : BaseActivity() {
         val adapter= TaskListItemAdapter(this,board.taskList)
         rv_task_list.adapter = adapter
 
+    }
+
+    fun addUpdateTaskListSuccess(){
+        hideProgressDialogue()
+        showProgressDialogue("Please wait ...")
+        FirestoreClass().getBoardDetails(this, mBoardDetails.documentId)
+    }
+
+    fun createTaskList(taskListName: String){
+        val task = Task(taskListName,FirestoreClass().getCurrentUserId())
+
+        mBoardDetails.taskList.add(0 , task)
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+        showProgressDialogue("Please wait ...")
+
+        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 }
