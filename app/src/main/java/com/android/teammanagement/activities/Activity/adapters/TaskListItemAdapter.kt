@@ -48,7 +48,7 @@ open class TaskListItemAdapter(
             }
             else{
                 holder.itemView.findViewById<TextView>(R.id.tv_add_task_list).visibility=View.GONE
-                holder.itemView.findViewById<TextView>(R.id.ll_task_item).visibility=View.VISIBLE
+                holder.itemView.findViewById<LinearLayout>(R.id.ll_task_item).visibility=View.VISIBLE
             }
 
             holder.itemView.findViewById<TextView>(R.id.tv_task_list_title).text=model.title
