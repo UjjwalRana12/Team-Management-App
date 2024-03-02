@@ -120,7 +120,7 @@
                     android:src="@drawable/baseline_edit_24" />
 
                 <ImageButton
-                    android:id="@+id/ib_delete_list_name"
+                    android:id="@+id/ib_delete_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"

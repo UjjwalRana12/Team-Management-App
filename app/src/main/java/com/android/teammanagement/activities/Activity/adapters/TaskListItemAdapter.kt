@@ -1,6 +1,7 @@
 package com.android.teammanagement.activities.Activity.adapters
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -99,10 +100,33 @@ open class TaskListItemAdapter(
                     Toast.makeText(context,"please enter list name", Toast.LENGTH_LONG).show()
                 }
             }
+
+            holder.itemView.findViewById<ImageButton>(R.id.ib_delete_list).setOnClickListener{
+
+                alertDialogForDeleteList(position,model.title)
+            }
         }
+
+
     }
 
+  private fun alertDialogForDeleteList(position: Int,title:String){
+    val builder= AlertDialog.Builder(context)
+      builder.setTitle("Alert")
+      builder.setMessage("Are you sure you want to delete $title")
+      builder.setIcon(R.drawable.baseline_warning_24)
+      builder.setPositiveButton("yes"){ dialogInterface,which -> dialogInterface.dismiss()
 
+          if (context is TaskListActivtiy){
+              context.deleteTaskList(position)
+          }
+      }
+      builder.setNegativeButton("no"){ dialogInterface,which -> dialogInterface.dismiss()
+      }
+      val alertDialog:AlertDialog=builder.create()
+      alertDialog.setCancelable(false)
+      alertDialog.show()
+}
     private fun Int.toDp():Int=(this/ Resources.getSystem().displayMetrics.density).toInt()
     private fun Int.toPx():Int=(this * Resources.getSystem().displayMetrics.density).toInt()
 
