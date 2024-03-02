@@ -19,16 +19,20 @@
         android:theme="@style/Theme.TeamManagement"
         tools:targetApi="31">
         <activity
+            android:name=".activities.Activity.Activity.TaskListActivtiy"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.TeamManagement" />
+        <activity
             android:name=".activities.Activity.Activity.CreateBoardActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"/>
-
+            android:theme="@style/Base.Theme.TeamManagement" />
         <activity
             android:name=".activities.Activity.Activity.MyProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"></activity>
+            android:theme="@style/Base.Theme.TeamManagement" />
         <activity
             android:name=".activities.Activity.Activity.BaseActivity"
             android:exported="false" />
@@ -36,17 +40,17 @@
             android:name=".activities.Activity.Activity.SignInActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"></activity>
+            android:theme="@style/Base.Theme.TeamManagement" />
         <activity
             android:name=".activities.Activity.Activity.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"></activity>
+            android:theme="@style/Base.Theme.TeamManagement" />
         <activity
             android:name=".activities.Activity.Activity.IntroActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"></activity>
+            android:theme="@style/Base.Theme.TeamManagement" />
         <activity
             android:name=".activities.Activity.Activity.SplashActivity"
             android:exported="true"
@@ -62,7 +66,7 @@
             android:name=".activities.Activity.Activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement"></activity>
+            android:theme="@style/Base.Theme.TeamManagement" />
     </application>
 
 </manifest>

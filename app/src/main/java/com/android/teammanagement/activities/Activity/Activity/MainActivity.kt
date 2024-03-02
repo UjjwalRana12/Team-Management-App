@@ -82,6 +82,15 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
             val adapter=BoardItemsAdapter(this,boardsList)
             rv_boards_list.adapter=adapter
+
+
+            adapter.setOnClickListener(object :BoardItemsAdapter.OnClickListener{
+                override fun onClick(position: Int, model: Board) {
+                    val intent=Intent(this@MainActivity,TaskListActivtiy::class.java)
+                    intent.putExtra(Constants.DOCUMENT_ID,model.documentId)
+                    startActivity(intent)
+                }
+            })
         }
         else{
             rv_boards_list.visibility= View.GONE
@@ -128,6 +137,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         else
             Log.e("cancelled", "cancelled")
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val drawer_layout = findViewById<DrawerLayout>(R.id.drawer_layout)
         when(item.itemId){
