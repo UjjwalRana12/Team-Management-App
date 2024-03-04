@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.view.setMargins
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.Activity.TaskListActivtiy
@@ -127,7 +128,14 @@ open class TaskListItemAdapter(
                     Toast.makeText(context,"pleaase enter card name", Toast.LENGTH_LONG).show()
                 }
             }
+            holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list).layoutManager = LinearLayoutManager(context)
+
+            holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list).setHasFixedSize(true)
+
+            val adapter= CardListItemsAdapter(context,model.cards)
+            holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list).adapter=adapter
         }
+
 
 
     }

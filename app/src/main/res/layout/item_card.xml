@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="5dp"
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:id="@+id/view_label_color"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:visibility="gone"
+            tools:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="14sp"
+            tools:text="card name"/>
+
+
+        <TextView
+            android:id="@+id/tv_members_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="6dp"
+            android:textColor="@color/color_primary"
+            android:visibility="gone"
+            tools:text ="member name" />
+
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>
