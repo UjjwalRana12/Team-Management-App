@@ -3,6 +3,7 @@ package com.android.teammanagement.activities.Activity.firebase
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
+import com.android.teammanagement.activities.Activity.Activity.CardDetailsActivity
 import com.android.teammanagement.activities.Activity.Activity.CreateBoardActivity
 import com.android.teammanagement.activities.Activity.Activity.MainActivity
 import com.android.teammanagement.activities.Activity.Activity.Members
@@ -10,6 +11,7 @@ import com.android.teammanagement.activities.Activity.Activity.MyProfileActivity
 import com.android.teammanagement.activities.Activity.Activity.SignInActivity
 import com.android.teammanagement.activities.Activity.Activity.SignUpActivity
 import com.android.teammanagement.activities.Activity.Activity.TaskListActivtiy
+
 import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
@@ -86,7 +88,7 @@ class FirestoreClass {
             }
     }
 
-    fun addUpdateTaskList(activity: TaskListActivtiy,board: Board){
+    fun addUpdateTaskList(activity: Activity,board: Board){
         val taskListHashMap= HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
 
@@ -95,10 +97,19 @@ class FirestoreClass {
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "task list updated successfully")
 
-                activity.addUpdateTaskListSuccess()
+
+                if(activity is TaskListActivtiy){
+                    activity.addUpdateTaskListSuccess()
+                }
+               else if(activity is CardDetailsActivity)
+                    activity.addUpdateTaskListSuccess()
+
             }.addOnFailureListener {
                 exception->
+                if(activity is TaskListActivtiy)
                 activity.hideProgressDialogue()
+                else if(activity is CardDetailsActivity)
+                    activity.hideProgressDialogue()
                 Log.e(activity.javaClass.simpleName, "error while creating a board",exception)
             }
     }
