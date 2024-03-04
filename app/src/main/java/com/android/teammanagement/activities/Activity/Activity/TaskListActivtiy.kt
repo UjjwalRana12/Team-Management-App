@@ -39,7 +39,7 @@ class TaskListActivtiy : BaseActivity() {
         showProgressDialogue("Please Wait...")
         FirestoreClass().getBoardDetails(this, mBoardDocumentId)
     }
-//  todo it relods screen again and again therefore needs to be checked but prefer ways
+//  todo it reloads screen again and again therefore needs to be checked but prefer ways
 //
 //    override fun onResume() {
 //        super.onResume()
@@ -49,7 +49,7 @@ class TaskListActivtiy : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == MEMBER_REQUEST_CODE){
+        if(resultCode == Activity.RESULT_OK && requestCode == MEMBER_REQUEST_CODE || requestCode== CARD_DETAILS_REQUEST_CODE){
             showProgressDialogue("Please Wait...")
             FirestoreClass().getBoardDetails(this, mBoardDocumentId)
         }
@@ -142,7 +142,11 @@ class TaskListActivtiy : BaseActivity() {
     }
 
     fun cardDetails(taskListPosition: Int, cardPostion: Int){
-        startActivity(Intent(this,CardDetailsActivity::class.java))
+        val intent = Intent(this,CardDetailsActivity::class.java)
+        intent.putExtra(Constants.BOARD_DETAILS,mBoardDetails)
+        intent.putExtra(Constants.TASK_LIST_ITEM_POSITION,taskListPosition)
+        intent.putExtra(Constants.CARD_LIST_ITEM_POSITION,cardPostion)
+        startActivityForResult(intent, CARD_DETAILS_REQUEST_CODE)
 
     }
 
@@ -174,6 +178,7 @@ class TaskListActivtiy : BaseActivity() {
     }
     companion object{
       const val MEMBER_REQUEST_CODE :Int = 13
+        const val CARD_DETAILS_REQUEST_CODE :Int = 14
 
     }
 
