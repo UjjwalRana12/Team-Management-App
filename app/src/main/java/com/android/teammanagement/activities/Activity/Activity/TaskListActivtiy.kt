@@ -1,8 +1,11 @@
 package com.android.teammanagement.activities.Activity.Activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -63,6 +66,21 @@ class TaskListActivtiy : BaseActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_members, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_members->{
+                val intent =Intent(this,Members::class.java)
+                intent.putExtra(Constants.BOARD_DETAILS,mBoardDetails)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
     fun addUpdateTaskListSuccess(){
         hideProgressDialogue()
         showProgressDialogue("Please wait ...")

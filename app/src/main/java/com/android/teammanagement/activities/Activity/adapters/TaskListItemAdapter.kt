@@ -136,8 +136,6 @@ open class TaskListItemAdapter(
             holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list).adapter=adapter
         }
 
-
-
     }
 
 

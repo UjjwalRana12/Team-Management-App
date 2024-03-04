@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,7 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamManagement"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".activities.Activity.Activity.Members"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.TeamManagement" />
+
         <activity
             android:name=".activities.Activity.Activity.TaskListActivtiy"
             android:exported="false"
@@ -55,7 +61,7 @@
             android:name=".activities.Activity.Activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.TeamManagement">
+            android:theme="@style/Base.Theme.TeamManagement" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
