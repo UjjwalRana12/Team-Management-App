@@ -16,7 +16,6 @@ import com.android.teammanagement.activities.Activity.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.toObject
 
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
@@ -174,6 +173,27 @@ class FirestoreClass {
             }
     }
 
+    fun getMemberDetails(activity: Members,email: String){
+        mFirestore.collection(Constants.USERS).whereEqualTo(Constants.EMAIL,email)
+            .get()
+            .addOnSuccessListener {
+                document->
+                    if(document.documents.size>0){
+                        val user = document.documents[0].toObject(User::class.java)!!
+                        activity.memberDetails(user)
+                    }
+                else{
+                    activity.hideProgressDialogue()
+                        activity.showErrorSnackBar("No Such Member found")
+                    }
+
+            }.addOnFailureListener {e->
+                activity.hideProgressDialogue()
+                Log.e(activity.javaClass.simpleName, "error while creating user details",e)
+
+            }
+    }
+
     fun getAssignedMembersListDetails(activity:Members,assignedTo:ArrayList<String>){
         mFirestore.collection(Constants.USERS)
             .whereIn(Constants.ID,assignedTo)
@@ -196,5 +216,24 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "error while createing board", e)
 
             }
+    }
+
+    fun assignedMemberToBoard(activity:Members,board: Board,user: User){
+
+        val assignedToHashMap = HashMap<String,Any>()
+            assignedToHashMap[(Constants.ASSIGNED_TO)]=board.assignedTo
+
+        mFirestore.collection(Constants.BOARDS)
+            .document(board.documentId)
+            .update(assignedToHashMap)
+            .addOnSuccessListener {
+                activity.memberAssignSuccess(user)
+            }
+            .addOnFailureListener { e->
+                activity.hideProgressDialogue()
+                Log.e(activity.javaClass.simpleName, "error while creating board", e)
+
+            }
+
     }
 }
