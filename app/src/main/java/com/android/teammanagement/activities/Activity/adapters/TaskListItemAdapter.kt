@@ -105,12 +105,36 @@ open class TaskListItemAdapter(
 
                 alertDialogForDeleteList(position,model.title)
             }
+
+            holder.itemView.findViewById<TextView>(R.id.tv_add_card).setOnClickListener{
+                holder.itemView.findViewById<TextView>(R.id.tv_add_card).visibility=View.GONE
+                holder.itemView.findViewById<CardView>(R.id.cv_add_card).visibility=View.VISIBLE
+            }
+
+            holder.itemView.findViewById<ImageButton>(R.id.ib_close_card_name).setOnClickListener {
+                holder.itemView.findViewById<TextView>(R.id.tv_add_card).visibility=View.VISIBLE
+                holder.itemView.findViewById<CardView>(R.id.cv_add_card).visibility=View.GONE
+            }
+            holder.itemView.findViewById<ImageButton>(R.id.ib_done_card_name).setOnClickListener{
+
+                val cardName= holder.itemView.findViewById<EditText>(R.id.et_card_name).text.toString()
+                if (cardName.isNotEmpty()){
+                    if (context is TaskListActivtiy){
+                       context.addCardToTaskList(position, cardName)
+                    }
+                }
+                else{
+                    Toast.makeText(context,"pleaase enter card name", Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
 
     }
 
-  private fun alertDialogForDeleteList(position: Int,title:String){
+
+  @SuppressLint("SuspiciousIndentation")
+  private fun alertDialogForDeleteList(position: Int, title:String){
     val builder= AlertDialog.Builder(context)
       builder.setTitle("Alert")
       builder.setMessage("Are you sure you want to delete $title")

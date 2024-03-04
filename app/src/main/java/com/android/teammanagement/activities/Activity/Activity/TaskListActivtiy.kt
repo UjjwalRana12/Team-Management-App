@@ -10,6 +10,7 @@ import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.adapters.TaskListItemAdapter
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.Board
+import com.android.teammanagement.activities.Activity.models.Card
 import com.android.teammanagement.activities.Activity.models.Task
 import com.android.teammanagement.activities.Activity.utils.Constants
 
@@ -98,4 +99,32 @@ class TaskListActivtiy : BaseActivity() {
 
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
+
+    fun addCardToTaskList(position: Int,cardName: String){
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+
+        val cardAssignedUsersList : ArrayList<String> = ArrayList()
+        cardAssignedUsersList.add(FirestoreClass().getCurrentUserId())
+
+        val card = Card(cardName,FirestoreClass().getCurrentUserId(),cardAssignedUsersList)
+
+        val cardsList = mBoardDetails.taskList[position].cards
+        cardsList.add(card)
+
+        val task = Task(
+            mBoardDetails.taskList[position].title,
+            mBoardDetails.taskList[position].createdBy,
+            cardsList
+        )
+
+
+        mBoardDetails.taskList[position] = task
+
+        showProgressDialogue("Please wait ...")
+
+        FirestoreClass().addUpdateTaskList(this,mBoardDetails)
+
+
+    }
+
 }
