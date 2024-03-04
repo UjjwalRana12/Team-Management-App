@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import com.android.teammanagement.activities.Activity.Activity.CreateBoardActivity
 import com.android.teammanagement.activities.Activity.Activity.MainActivity
+import com.android.teammanagement.activities.Activity.Activity.Members
 import com.android.teammanagement.activities.Activity.Activity.MyProfileActivity
 import com.android.teammanagement.activities.Activity.Activity.SignInActivity
 import com.android.teammanagement.activities.Activity.Activity.SignUpActivity
@@ -169,6 +170,30 @@ class FirestoreClass {
 
                 }
                 Log.e("SignInUser", "error registering")
+
+            }
+    }
+
+    fun getAssignedMembersListDetails(activity:Members,assignedTo:ArrayList<String>){
+        mFirestore.collection(Constants.USERS)
+            .whereIn(Constants.ID,assignedTo)
+            .get()
+            .addOnSuccessListener {
+                document->
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                val usersList:ArrayList<User> = ArrayList()
+
+                for(i in document.documents){
+
+                    val user = i.toObject(User::class.java)!!
+                    usersList.add(user)
+                }
+
+                activity.setUpMembersList(usersList)
+            }.addOnFailureListener { e->
+                activity.hideProgressDialogue()
+                Log.e(activity.javaClass.simpleName, "error while createing board", e)
 
             }
     }
