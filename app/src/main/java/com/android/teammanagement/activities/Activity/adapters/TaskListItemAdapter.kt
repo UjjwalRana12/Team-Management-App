@@ -43,7 +43,8 @@ open class TaskListItemAdapter(
     }
 
     @SuppressLint("SuspiciousIndentation")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
     val model = list[position]
         if(holder is MyViewHolder){
             if(position==list.size - 1){
@@ -134,6 +135,16 @@ open class TaskListItemAdapter(
 
             val adapter= CardListItemsAdapter(context,model.cards)
             holder.itemView.findViewById<RecyclerView>(R.id.rv_card_list).adapter=adapter
+
+            adapter.setOnClickListener(
+                object : CardListItemsAdapter.OnClickListener{
+                    override fun onClick(cardPosition: Int) {
+                        if (context is TaskListActivtiy){
+                            context.cardDetails(position, cardPosition)
+                        }
+                    }
+                }
+            )
         }
 
     }

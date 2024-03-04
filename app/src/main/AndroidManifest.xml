@@ -19,11 +19,15 @@
         android:theme="@style/Theme.TeamManagement"
         tools:targetApi="31" >
         <activity
+            android:name=".activities.Activity.Activity.CardDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.TeamManagement"/>
+        <activity
             android:name=".activities.Activity.Activity.Members"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.TeamManagement" />
-
         <activity
             android:name=".activities.Activity.Activity.TaskListActivtiy"
             android:exported="false"

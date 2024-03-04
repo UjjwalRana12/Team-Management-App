@@ -24,6 +24,7 @@ class Members : BaseActivity() {
     private lateinit var toolbar_members_activity:Toolbar
     private lateinit var rv_members_list:RecyclerView
     private lateinit var mAssignedMembersList:ArrayList<User>
+    private var anyChangesMade:Boolean = false
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,14 +110,24 @@ class Members : BaseActivity() {
         dialogue.show()
     }
 
+
     fun memberDetails(user: User) {
         mBoardDetails.assignedTo.add(user.id)
         FirestoreClass().assignedMemberToBoard(this,mBoardDetails,user)
     }
 
+    override fun onBackPressed() {
+        if(anyChangesMade){
+            setResult(RESULT_OK)
+
+        }
+        super.onBackPressed()
+    }
     fun memberAssignSuccess(user:User){
         hideProgressDialogue()
         mAssignedMembersList.add(user)
+
+        anyChangesMade =true
         setUpMembersList(mAssignedMembersList)
     }
 }
