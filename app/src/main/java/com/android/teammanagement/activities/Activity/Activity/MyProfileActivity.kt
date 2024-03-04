@@ -187,7 +187,7 @@ class MyProfileActivity : BaseActivity() {
 
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener{
                 taskSnapshot->
-                Log.i("FIrebase Image Url",
+                Log.i("Firebase Image Url",
                     taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
 
                 taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
