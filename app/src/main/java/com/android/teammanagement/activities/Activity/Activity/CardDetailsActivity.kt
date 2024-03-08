@@ -15,10 +15,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.dialogues.LabelColorDialogueClass
+import com.android.teammanagement.activities.Activity.dialogues.MembersListDialogue
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.models.Card
 import com.android.teammanagement.activities.Activity.models.Task
+import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
 
 import kotlin.collections.ArrayList
@@ -28,7 +30,9 @@ class CardDetailsActivity : BaseActivity() {
     private lateinit var et_name_card_details:EditText
     private lateinit var btn_update_card_details:Button
     private lateinit var tv_selected_label_color:TextView
+    private lateinit var tv_selected_members:TextView
     private lateinit var mBoardDetails :Board
+    private lateinit var mMembersDetailList:ArrayList<User>
     private var mTaskListPosition = -1
     private var mCardPosition = -1
     private var mSelectedColor=""
@@ -40,6 +44,7 @@ class CardDetailsActivity : BaseActivity() {
         btn_update_card_details=findViewById(R.id.btn_update_card_details)
         toolbar_card_details_activity=findViewById(R.id.toolbar_card_details_activity)
         tv_selected_label_color=findViewById(R.id.tv_selected_label_color)
+        tv_selected_members=findViewById(R.id.tv_selected_members)
         getIntentData()
         setupActionBar()
         et_name_card_details.setText(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
@@ -67,6 +72,9 @@ class CardDetailsActivity : BaseActivity() {
 
         tv_selected_label_color.setOnClickListener{
             labelColorListDialogue()
+        }
+        tv_selected_members.setOnClickListener{
+            membersListDialog()
         }
 
     }
@@ -101,7 +109,9 @@ class CardDetailsActivity : BaseActivity() {
         if(intent.hasExtra(Constants.CARD_LIST_ITEM_POSITION)){
             mCardPosition=intent.getIntExtra(Constants.CARD_LIST_ITEM_POSITION,-1)
         }
-
+        if(intent.hasExtra(Constants.BOARD_MEMBERS_LIST)){
+                mMembersDetailList = intent.getParcelableArrayListExtra(Constants.BOARD_MEMBERS_LIST)!!
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -204,5 +214,30 @@ class CardDetailsActivity : BaseActivity() {
         listDialog.show()
 
     }
+         private fun membersListDialog(){
+             var cardAssignedMembersList = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
 
+             if(cardAssignedMembersList.size>0){
+                 for (i in mMembersDetailList.indices){
+                     for(j in cardAssignedMembersList){
+                         if(mMembersDetailList[i].id ==j){
+                             mMembersDetailList[i].selected = true
+
+                         }
+                     }
+                 }
+             }else{
+                 for(i in mMembersDetailList.indices){
+                     mMembersDetailList[i].selected = false
+                 }
+             }
+             val listDialog = object:MembersListDialogue(this,mMembersDetailList,"select members"){
+                 override fun onItemSelected(user: User, action: String) {
+                     TODO("Not yet implemented")
+                 }
+
+             }
+             listDialog.show()
+
+         }
 }

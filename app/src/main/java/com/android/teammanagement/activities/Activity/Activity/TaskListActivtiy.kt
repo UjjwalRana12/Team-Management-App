@@ -17,6 +17,7 @@ import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.models.Card
 import com.android.teammanagement.activities.Activity.models.Task
+import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
 
 class TaskListActivtiy : BaseActivity() {
@@ -25,6 +26,7 @@ class TaskListActivtiy : BaseActivity() {
     private lateinit var  mBoardDetails: Board
 
     private lateinit var mBoardDocumentId: String
+    private lateinit var mAssignedMemberDetailList:ArrayList<User>
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +88,9 @@ class TaskListActivtiy : BaseActivity() {
         val adapter= TaskListItemAdapter(this,board.taskList)
         rv_task_list.adapter = adapter
 
+        showProgressDialogue("Please Wait")
+        FirestoreClass().getAssignedMembersListDetails(this,mBoardDetails.assignedTo)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -146,6 +151,7 @@ class TaskListActivtiy : BaseActivity() {
         intent.putExtra(Constants.BOARD_DETAILS,mBoardDetails)
         intent.putExtra(Constants.TASK_LIST_ITEM_POSITION,taskListPosition)
         intent.putExtra(Constants.CARD_LIST_ITEM_POSITION,cardPostion)
+        intent.putExtra(Constants.BOARD_MEMBERS_LIST,mAssignedMemberDetailList)
         startActivityForResult(intent, CARD_DETAILS_REQUEST_CODE)
 
     }
@@ -175,6 +181,10 @@ class TaskListActivtiy : BaseActivity() {
         FirestoreClass().addUpdateTaskList(this,mBoardDetails)
 
 
+    }
+    fun boardMembersDdetailsList(list:ArrayList<User>){
+        mAssignedMemberDetailList= list
+        hideProgressDialogue()
     }
     companion object{
       const val MEMBER_REQUEST_CODE :Int = 13
