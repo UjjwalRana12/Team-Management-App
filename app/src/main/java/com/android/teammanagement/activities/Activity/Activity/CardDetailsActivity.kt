@@ -83,6 +83,7 @@ class CardDetailsActivity : BaseActivity() {
         tv_selected_members.setOnClickListener{
             membersListDialog()
         }
+        setupSelectedMemberList()
 
     }
     private fun setupActionBar() {
@@ -144,6 +145,12 @@ class CardDetailsActivity : BaseActivity() {
             mSelectedColor
 
         )
+
+        val taskList :ArrayList<Task> = mBoardDetails.taskList
+        taskList.removeAt(taskList.size - 1)
+
+
+
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
 
         showProgressDialogue("Please Wait ...")
@@ -240,7 +247,25 @@ class CardDetailsActivity : BaseActivity() {
              }
              val listDialog = object:MembersListDialogue(this,mMembersDetailList,"select members"){
                  override fun onItemSelected(user: User, action: String) {
-                     TODO("Not yet implemented")
+
+                     if(action == Constants.SELECT){
+                         if (mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.contains(user.id)){
+                             (mBoardDetails.taskList[mTaskListPosition].
+                             cards[mCardPosition].assignedTo.add(user.id))
+                         }
+                     }else{
+                         mBoardDetails.taskList[mTaskListPosition].
+                         cards[mCardPosition].assignedTo.remove(user.id)
+
+                         for(i in mMembersDetailList.indices){
+                             if(mMembersDetailList[i].id==user.id){
+                                 mMembersDetailList[i].selected=false
+                             }
+                         }
+                     }
+                       setupSelectedMemberList()
+
+
                  }
 
              }
