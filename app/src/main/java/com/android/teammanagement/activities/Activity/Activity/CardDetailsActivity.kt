@@ -151,6 +151,7 @@ class CardDetailsActivity : BaseActivity() {
 
 
 
+
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
 
         showProgressDialogue("Please Wait ...")
@@ -297,7 +298,7 @@ class CardDetailsActivity : BaseActivity() {
 
             rv_selected_members_list.layoutManager = GridLayoutManager(this,6)
 
-            val adapter = CardMembersListItemAdapter(this,selectedMembersList)
+            val adapter = CardMembersListItemAdapter(this,selectedMembersList,true)
 
             rv_selected_members_list.adapter=adapter
             adapter.setOnClickListener(

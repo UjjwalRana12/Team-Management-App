@@ -11,7 +11,7 @@ import com.android.teammanagement.activities.Activity.models.SelectedMembers
 import com.bumptech.glide.Glide
 
 open class CardMembersListItemAdapter(private val context: Context
-,private val list:ArrayList<SelectedMembers>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+,private val list:ArrayList<SelectedMembers>,private val assignMembers:Boolean): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var onClickListener:OnClickListener?=null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -28,7 +28,7 @@ open class CardMembersListItemAdapter(private val context: Context
         val model =list[position]
 
         if(holder is MyViewHolder){
-            if(position==list.size - 1){
+            if(position==list.size - 1 && assignMembers){
                 holder.itemView.findViewById<ImageView>(R.id.iv_add_members).visibility=View.VISIBLE
                 holder.itemView.findViewById<ImageView>(R.id.iv_selected_members_image).visibility=View.GONE
             }else{

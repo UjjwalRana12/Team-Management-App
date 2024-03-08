@@ -26,7 +26,7 @@ class TaskListActivtiy : BaseActivity() {
     private lateinit var  mBoardDetails: Board
 
     private lateinit var mBoardDocumentId: String
-    private lateinit var mAssignedMemberDetailList:ArrayList<User>
+    lateinit var mAssignedMemberDetailList:ArrayList<User>
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,14 +79,6 @@ class TaskListActivtiy : BaseActivity() {
         hideProgressDialogue()
         setupActionBar()
 
-        val addtaskList = Task("add list")
-        board.taskList.add(addtaskList)
-
-        rv_task_list.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
-        rv_task_list.setHasFixedSize(true)
-
-        val adapter= TaskListItemAdapter(this,board.taskList)
-        rv_task_list.adapter = adapter
 
         showProgressDialogue("Please Wait")
         FirestoreClass().getAssignedMembersListDetails(this,mBoardDetails.assignedTo)
@@ -185,6 +177,14 @@ class TaskListActivtiy : BaseActivity() {
     fun boardMembersDdetailsList(list:ArrayList<User>){
         mAssignedMemberDetailList= list
         hideProgressDialogue()
+        val addtaskList = Task("add list")
+        mBoardDetails.taskList.add(addtaskList)
+
+        rv_task_list.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        rv_task_list.setHasFixedSize(true)
+
+        val adapter= TaskListItemAdapter(this,mBoardDetails.taskList)
+        rv_task_list.adapter = adapter
     }
     companion object{
       const val MEMBER_REQUEST_CODE :Int = 13
