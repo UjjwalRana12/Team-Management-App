@@ -8,17 +8,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.teammanagement.R
+import com.android.teammanagement.activities.Activity.adapters.CardMembersListItemAdapter
 import com.android.teammanagement.activities.Activity.dialogues.LabelColorDialogueClass
 import com.android.teammanagement.activities.Activity.dialogues.MembersListDialogue
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.Board
 import com.android.teammanagement.activities.Activity.models.Card
+import com.android.teammanagement.activities.Activity.models.SelectedMembers
 import com.android.teammanagement.activities.Activity.models.Task
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
@@ -31,6 +36,7 @@ class CardDetailsActivity : BaseActivity() {
     private lateinit var btn_update_card_details:Button
     private lateinit var tv_selected_label_color:TextView
     private lateinit var tv_selected_members:TextView
+    private lateinit var rv_selected_members_list:RecyclerView
     private lateinit var mBoardDetails :Board
     private lateinit var mMembersDetailList:ArrayList<User>
     private var mTaskListPosition = -1
@@ -45,6 +51,7 @@ class CardDetailsActivity : BaseActivity() {
         toolbar_card_details_activity=findViewById(R.id.toolbar_card_details_activity)
         tv_selected_label_color=findViewById(R.id.tv_selected_label_color)
         tv_selected_members=findViewById(R.id.tv_selected_members)
+        rv_selected_members_list = findViewById(R.id.rv_selected_members_list)
         getIntentData()
         setupActionBar()
         et_name_card_details.setText(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
@@ -240,4 +247,44 @@ class CardDetailsActivity : BaseActivity() {
              listDialog.show()
 
          }
+
+    private fun setupSelectedMemberList(){
+        val cardsAssignedMemberList = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
+
+        val selectedMembersList:ArrayList<SelectedMembers> = ArrayList()
+
+        for (i in mMembersDetailList.indices){
+            for(j in cardsAssignedMemberList){
+                if(mMembersDetailList[i].id ==j){
+                    val selectedMember = SelectedMembers(
+                        mMembersDetailList[i].id,
+                        mMembersDetailList[i].image
+
+                    )
+                     selectedMembersList.add(selectedMember)
+                }
+            }
+        }
+        if(selectedMembersList.size>0){
+            selectedMembersList.add(SelectedMembers("",""))
+            tv_selected_members.visibility = View.GONE
+            rv_selected_members_list.visibility = View.VISIBLE
+
+            rv_selected_members_list.layoutManager = GridLayoutManager(this,6)
+
+            val adapter = CardMembersListItemAdapter(this,selectedMembersList)
+
+            rv_selected_members_list.adapter=adapter
+            adapter.setOnClickListener(
+                object :CardMembersListItemAdapter.OnClickListener{
+                    override fun onClick() {
+                        membersListDialog()
+                    }
+                }
+            )
+        }else{
+            tv_selected_members.visibility = View.VISIBLE
+            rv_selected_members_list.visibility = View.GONE
+        }
+    }
 }
