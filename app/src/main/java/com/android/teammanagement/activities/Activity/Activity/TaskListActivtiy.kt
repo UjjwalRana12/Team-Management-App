@@ -186,6 +186,14 @@ class TaskListActivtiy : BaseActivity() {
         val adapter= TaskListItemAdapter(this,mBoardDetails.taskList)
         rv_task_list.adapter = adapter
     }
+
+    fun updateCardsInTaskList(taskListPosition: Int, cards:ArrayList<Card>){
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size-1)
+
+        mBoardDetails.taskList[taskListPosition].cards = cards
+
+        showProgressDialogue("Please Wait...")
+    }
     companion object{
       const val MEMBER_REQUEST_CODE :Int = 13
         const val CARD_DETAILS_REQUEST_CODE :Int = 14
