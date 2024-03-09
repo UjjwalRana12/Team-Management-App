@@ -98,7 +98,7 @@ class CardDetailsActivity : BaseActivity() {
 
 
         if(mSelectedDueDateMilliSeconds>0){
-            val simpleDateFormat =SimpleDateFormat("dd/MM,yyyy",Locale.ENGLISH)
+            val simpleDateFormat =SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH)
             val selectedDate =simpleDateFormat.format(Date(mSelectedDueDateMilliSeconds) )
             tv_selected_due_date.text = selectedDate
         }
@@ -351,7 +351,7 @@ class CardDetailsActivity : BaseActivity() {
                 val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
                 tv_selected_due_date.text = selectedDate
 
-                val sdf = SimpleDateFormat("dd//MM//yyyy", Locale.ENGLISH)
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                 val theDate = sdf.parse(selectedDate)
                 mSelectedDueDateMilliSeconds = theDate!!.time
             },
