@@ -30,6 +30,7 @@ import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 import kotlin.collections.ArrayList
@@ -92,6 +93,15 @@ class CardDetailsActivity : BaseActivity() {
         }
         setupSelectedMemberList()
 
+        mSelectedDueDateMilliSeconds = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition]
+            .dueDate
+
+
+        if(mSelectedDueDateMilliSeconds>0){
+            val simpleDateFormat =SimpleDateFormat("dd/MM,yyyy",Locale.ENGLISH)
+            val selectedDate =simpleDateFormat.format(Date(mSelectedDueDateMilliSeconds) )
+            tv_selected_due_date.text = selectedDate
+        }
         tv_selected_due_date.setOnClickListener{
             showDataPicker()
         }
@@ -153,7 +163,8 @@ class CardDetailsActivity : BaseActivity() {
             et_name_card_details.text.toString(),
             mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].createdBy,
             mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo,
-            mSelectedColor
+            mSelectedColor,
+            mSelectedDueDateMilliSeconds
 
         )
 
