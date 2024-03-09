@@ -121,6 +121,7 @@
                     android:textColor="@color/text_color_primary"
                      android:textSize="12sp"/>
                  <TextView
+                     android:id="@+id/tv_selected_due_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="select due date"

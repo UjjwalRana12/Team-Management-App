@@ -3,6 +3,7 @@ package com.android.teammanagement.activities.Activity.Activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +28,9 @@ import com.android.teammanagement.activities.Activity.models.SelectedMembers
 import com.android.teammanagement.activities.Activity.models.Task
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 import kotlin.collections.ArrayList
 
@@ -36,12 +40,14 @@ class CardDetailsActivity : BaseActivity() {
     private lateinit var btn_update_card_details:Button
     private lateinit var tv_selected_label_color:TextView
     private lateinit var tv_selected_members:TextView
+    private lateinit var tv_selected_due_date:TextView
     private lateinit var rv_selected_members_list:RecyclerView
     private lateinit var mBoardDetails :Board
     private lateinit var mMembersDetailList:ArrayList<User>
     private var mTaskListPosition = -1
     private var mCardPosition = -1
     private var mSelectedColor=""
+    private var mSelectedDueDateMilliSeconds:Long=0
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +56,7 @@ class CardDetailsActivity : BaseActivity() {
         btn_update_card_details=findViewById(R.id.btn_update_card_details)
         toolbar_card_details_activity=findViewById(R.id.toolbar_card_details_activity)
         tv_selected_label_color=findViewById(R.id.tv_selected_label_color)
+        tv_selected_due_date=findViewById(R.id.tv_selected_due_date)
         tv_selected_members=findViewById(R.id.tv_selected_members)
         rv_selected_members_list = findViewById(R.id.rv_selected_members_list)
         getIntentData()
@@ -84,6 +91,10 @@ class CardDetailsActivity : BaseActivity() {
             membersListDialog()
         }
         setupSelectedMemberList()
+
+        tv_selected_due_date.setOnClickListener{
+            showDataPicker()
+        }
 
     }
     private fun setupActionBar() {
@@ -313,4 +324,40 @@ class CardDetailsActivity : BaseActivity() {
             rv_selected_members_list.visibility = View.GONE
         }
     }
+
+    private fun showDataPicker() {
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val dpd = DatePickerDialog(
+            this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
+                val sMonthOfYear =
+                    if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
+
+                val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
+                tv_selected_due_date.text = selectedDate
+
+                val sdf = SimpleDateFormat("dd//MM//yyyy", Locale.ENGLISH)
+                val theDate = sdf.parse(selectedDate)
+                mSelectedDueDateMilliSeconds = theDate!!.time
+            },
+            year, month, day
+        )
+        dpd.show()
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
