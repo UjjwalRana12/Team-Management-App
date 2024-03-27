@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@drawable/gradient_image"
+    android:background="@drawable/final_bg"
     android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_height="match_parent">
@@ -18,7 +18,7 @@
         android:elevation="14dp"
         app:cardCornerRadius="14dp">
         <androidx.recyclerview.widget.RecyclerView
-
+            android:background="@color/white"
             android:id="@+id/rv_boards_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,8 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="NO BOARDS AVAILABLE"
+            android:background="@color/white"
             android:gravity="center"
-            android:textColor="@color/color_secondary"
+            android:textColor="@color/text_color_secondary"
             android:textSize="24sp"/>
 
 

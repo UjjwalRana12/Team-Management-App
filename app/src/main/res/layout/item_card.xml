@@ -29,22 +29,28 @@
             tools:text="card name" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/white"
             android:id="@+id/rv_card_selected_members_list"
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible"/>
 
         <TextView
+
             android:id="@+id/tv_members_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:padding="6dp"
+            android:backgroundTint="@color/white"
+            android:background="@color/white"
             android:textColor="@color/color_primary"
             android:visibility="gone"
-            tools:text="member name" />
+            tools:text="member name"
+            tools:ignore="MissingPrefix" />
 
 
     </LinearLayout>

@@ -219,14 +219,14 @@ class CardDetailsActivity : BaseActivity() {
 
     private fun colorList():ArrayList<String>{
         val colorsList : ArrayList<String> = ArrayList()
+        colorsList.add("#FF0000")
+        colorsList.add("#FFFF00")
+        colorsList.add("#00FFFF")
+        colorsList.add("#FF4500")
+        colorsList.add("#FF00FF")
+        colorsList.add("#FFA500")
         colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
-        colorsList.add("#43C86F")
+        colorsList.add("#1E90FF")
 
         return colorsList
     }

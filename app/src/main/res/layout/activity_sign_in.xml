@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/final_bg"
     android:layout_height="match_parent"
     tools:context=".activities.Activity.Activity.SignInActivity">
 
@@ -10,6 +11,7 @@
         android:id="@+id/signIn_toolbar"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:textColor="@color/text_color_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +23,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Sign In"
+            android:textColor="@color/text_color_secondary"
             android:textSize="24sp"
             android:textStyle="bold">
 
@@ -32,7 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="enter your Email and password to register us"
+        android:text=" LET'S GET IN"
+        android:textSize="22sp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/text_color_secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +47,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="350dp"
+        android:background="@color/white"
         android:layout_margin="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,16 +58,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/et_email"
                 android:layout_width="240sp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="48dp"
                 android:hint="Email"
+                android:textColor="@color/text_color_secondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.492"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,6 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:hint="password"
+                android:textColor="@color/text_color_secondary"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:text="sign in"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/color_primary"
                 app:layout_constraintEnd_toEndOf="@+id/et_password"
                 app:layout_constraintStart_toStartOf="@+id/et_password"

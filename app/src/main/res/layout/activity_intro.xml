@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".activities.Activity.Activity.IntroActivity">
 
@@ -11,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome "
+        android:textColor="@color/text_color_primary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,33 +24,36 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/grp" />
+        app:srcCompat="@drawable/sign_in" />
 
     <Button
         android:id="@+id/button_SignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Sign IN"
-        android:background="@drawable/shape_button_rounded"
+        android:layout_width="124dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="52dp"
+        android:text="Sign In"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/color_secondary"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/buttonSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
-        android:text="signUP"
-        android:background="@drawable/white_border_shape_button"
-        app:layout_constraintEnd_toEndOf="@+id/button_SignIn"
-        app:layout_constraintStart_toStartOf="@+id/button_SignIn"
-        app:layout_constraintTop_toTopOf="@+id/button_SignIn" />
+        android:layout_width="124dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="52dp"
+        android:text="Sign Up"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/color_primary"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.616"
+        app:layout_constraintStart_toEndOf="@+id/button_SignIn"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,13 +41,7 @@ class TaskListActivtiy : BaseActivity() {
         showProgressDialogue("Please Wait...")
         FirestoreClass().getBoardDetails(this, mBoardDocumentId)
     }
-//  todo it reloads screen again and again therefore needs to be checked but prefer ways
-//
-//    override fun onResume() {
-//        super.onResume()
-//        showProgressDialogue("Please Wait...")
-//        FirestoreClass().getBoardDetails(this, mBoardDocumentId)
-//    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

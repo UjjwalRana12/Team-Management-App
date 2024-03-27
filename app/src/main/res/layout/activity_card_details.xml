@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/final_bg"
     android:orientation="vertical"
     tools:context=".activities.Activity.Activity.CardDetailsActivity">
 
@@ -33,10 +34,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@color/white"
             android:elevation="5dp"
             app:cardCornerRadius="5dp">
 
             <LinearLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -45,14 +48,21 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_name_card_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:hint="card name"
+                        android:textColor="@color/text_color_secondary"
+                        android:textColorHighlight="@color/color_secondary"
                         android:inputType="text"
+                        android:shadowColor="@color/color_secondary"
+                        android:textColorHint="@color/color_secondary"
+                        android:outlineSpotShadowColor="@color/color_secondary"
                         android:textSize="22dp"/>
 
 
@@ -65,8 +75,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/final_bg"
             android:elevation="5dp">
             <LinearLayout
+                android:background="@drawable/final_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -102,6 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="select member"
+                     android:background="@color/white"
                     android:textColor="@color/text_color_primary"
                      android:layout_marginBottom="13dp"
                      android:textSize="24sp"/>
@@ -110,6 +123,7 @@
                     android:id="@+id/rv_selected_members_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:layout_marginTop="5dp"
                     android:visibility="gone"
                     tools:visibility="visible"/>
@@ -125,6 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="select due date"
+                     android:background="@color/white"
                     android:textColor="@color/text_color_primary"
                      android:layout_marginBottom="13dp"
                      android:textSize="24sp"/>
@@ -132,6 +147,7 @@
                     android:id="@+id/btn_update_card_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_secondary"
                     android:text="UPDATE"/>
 
 

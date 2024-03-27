@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <ProgressBar
@@ -10,6 +11,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="76dp"
         android:layout_height="69dp"
+        android:progressTint="@color/color_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvprogressText"
         app:layout_constraintHorizontal_bias="0.538"
@@ -20,10 +22,12 @@
         android:id="@+id/tvprogressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="132dp"
+        android:layout_marginEnd="80dp"
         android:text="Please Wait"
+        android:textColor="@color/text_color_secondary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
+        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.567" />
 </androidx.constraintlayout.widget.ConstraintLayout>
