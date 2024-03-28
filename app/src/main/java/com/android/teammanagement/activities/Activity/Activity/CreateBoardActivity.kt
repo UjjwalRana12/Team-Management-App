@@ -51,7 +51,7 @@ class CreateBoardActivity : BaseActivity() {
                     Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED){
 
-                Constants.showImageChoser(this)
+                Constants.showImageChoser(this,Constants.PICK_IMAGE_REQUEST_CODE)
             }
             else {
                 ActivityCompat.requestPermissions(
@@ -143,7 +143,7 @@ class CreateBoardActivity : BaseActivity() {
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("Permission", "Read storage permission granted")
-                Constants.showImageChoser(this)
+                Constants.showImageChoser(this,Constants.PICK_IMAGE_REQUEST_CODE)
             }
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()

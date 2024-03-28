@@ -41,8 +41,11 @@ open class BaseActivity : AppCompatActivity() {
         mPregressDialogue.show()
     }
 
-    fun hideProgressDialogue(){
-        mPregressDialogue.dismiss()
+    fun hideProgressDialogue() {
+        if (::mPregressDialogue.isInitialized && mPregressDialogue.isShowing) {
+            mPregressDialogue.dismiss()
+
+        }
     }
 
     fun getCurrentUserId(): String {

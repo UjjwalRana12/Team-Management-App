@@ -1,5 +1,6 @@
 package com.android.teammanagement.activities.Activity.Activity
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,7 +10,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -17,13 +17,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
 import com.android.teammanagement.R
 import com.android.teammanagement.activities.Activity.firebase.FirestoreClass
 import com.android.teammanagement.activities.Activity.models.User
 import com.android.teammanagement.activities.Activity.utils.Constants
 import com.android.teammanagement.activities.Activity.utils.Constants.READ_STORAGE_PERMISSION_CODE
-
+import com.android.teammanagement.activities.Activity.utils.Constants.showImageChoser
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -31,21 +30,19 @@ import java.io.IOException
 
 class MyProfileActivity : BaseActivity() {
 
-
-
     lateinit var my_pro_toolbar: Toolbar
     lateinit var iv_profile_user_image: ImageView
     lateinit var et_pro_name: EditText
     lateinit var et_pro_email: EditText
     lateinit var et_pro_phone: EditText
-    lateinit var btn_update:Button
+    lateinit var btn_update: Button
 
     private var mSelectedImageFileUri: Uri? = null
-    private lateinit var mUserDetails:User
+    private lateinit var mUserDetails: User
     private var mProfileImageURL: String? = ""
 
+    private val PICK_IMAGE_REQUEST_CODE = 1
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
@@ -54,40 +51,37 @@ class MyProfileActivity : BaseActivity() {
         et_pro_name = findViewById(R.id.et_name_pro)
         et_pro_email = findViewById(R.id.et_email_pro)
         et_pro_phone = findViewById(R.id.et_phone_pro)
-        btn_update=findViewById(R.id.btn_update)
+        btn_update = findViewById(R.id.btn_update)
         setupActionBar()
 
         FirestoreClass().loadUserData(this)
 
         iv_profile_user_image.setOnClickListener {
-            Log.d("permission","image button is triggered")
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
 
-               Constants.showImageChoser(this)
-            }
-            else {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                Log.d("permission", "Image button is triggered")
+                showImageChoser(this, PICK_IMAGE_REQUEST_CODE)
+            } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     READ_STORAGE_PERMISSION_CODE
                 )
-
             }
-
         }
 
         btn_update.setOnClickListener {
-            if(mSelectedImageFileUri!=null){
+            if (mSelectedImageFileUri != null) {
                 uploadUserImage()
-            }
-            else {
-                showProgressDialogue("please wait")
+            } else {
+                showProgressDialogue("Please wait")
                 updateUserProfileData()
             }
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -99,7 +93,7 @@ class MyProfileActivity : BaseActivity() {
         if (requestCode == READ_STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("Permission", "Read storage permission granted")
-                Constants.showImageChoser(this)
+                showImageChoser(this, PICK_IMAGE_REQUEST_CODE)
             }
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
@@ -109,11 +103,10 @@ class MyProfileActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == Constants.PICK_IMAGE_REQUEST_CODE && data!!.data != null) {
+        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_REQUEST_CODE && data != null) {
             mSelectedImageFileUri = data.data
             try {
-                Glide
-                    .with(this@MyProfileActivity)
+                Glide.with(this@MyProfileActivity)
                     .load(mSelectedImageFileUri)
                     .centerCrop()
                     .placeholder(R.drawable.profile)
@@ -121,35 +114,25 @@ class MyProfileActivity : BaseActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
-
         }
     }
 
     private fun setupActionBar() {
         setSupportActionBar(my_pro_toolbar)
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24)
-            actionBar.title = "My Profile"
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24)
+            title = "My Profile"
         }
         my_pro_toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }
 
-
-
-
-
-
     fun setUserDatInUI(user: User) {
+        mUserDetails = user
 
-        mUserDetails=user
-
-        Glide
-            .with(this@MyProfileActivity)
+        Glide.with(this@MyProfileActivity)
             .load(user.image)
             .centerCrop()
             .placeholder(R.drawable.profile)
@@ -161,57 +144,57 @@ class MyProfileActivity : BaseActivity() {
             et_pro_phone.setText(user.mobile.toString())
         }
     }
-      private fun updateUserProfileData(){
-            var userHashMap= HashMap<String,Any>()
 
-            if(mProfileImageURL!!.isNotEmpty() && mProfileImageURL!= mUserDetails.image){
+    private fun updateUserProfileData() {
+        val userHashMap = HashMap<String, Any>()
 
-                userHashMap[Constants.IMAGE]= mProfileImageURL!!
-            }
-            if(et_pro_name.text.toString()!=mUserDetails.name){
-                userHashMap[Constants.NAME]= et_pro_name.text.toString()
-
-            }
-            if(et_pro_phone.toString()!=mUserDetails.mobile.toString()){
-                userHashMap[Constants.MOBILE]=et_pro_phone.text.toString().toLong()
-            }
-            FirestoreClass().updateUserProfileData(this,userHashMap)
+        if (mProfileImageURL!!.isNotEmpty() && mProfileImageURL != mUserDetails.image) {
+            userHashMap[Constants.IMAGE] = mProfileImageURL!!
         }
-
-    private fun uploadUserImage(){
-        showProgressDialogue("please wait")
-        if (mSelectedImageFileUri!=null) {
-            val sRef:StorageReference=FirebaseStorage.getInstance()
-                .reference.child("USER_IMAGE"+System.currentTimeMillis()+
-                        "."+Constants.getFileExtension(this,mSelectedImageFileUri))
-
-            sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener{
-                taskSnapshot->
-                Log.i("Firebase Image Url",
-                    taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
-
-                taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                    uri ->
-                    Log.e("Downloadable Image Url",uri.toString())
-                    mProfileImageURL=uri.toString()
-
-                    updateUserProfileData()
-
-                }
-            }.addOnFailureListener{
-                exception->
-                Toast.makeText(this@MyProfileActivity,exception.message, Toast.LENGTH_SHORT).show()
-                hideProgressDialogue()
-            }
-
+        if (et_pro_name.text.toString() != mUserDetails.name) {
+            userHashMap[Constants.NAME] = et_pro_name.text.toString()
         }
-
+        if (et_pro_phone.toString() != mUserDetails.mobile.toString()) {
+            userHashMap[Constants.MOBILE] = et_pro_phone.text.toString().toLong()
+        }
+        FirestoreClass().updateUserProfileData(this, userHashMap)
     }
 
+    private fun uploadUserImage() {
+        showProgressDialogue("Please wait")
+        if (mSelectedImageFileUri != null) {
+            val sRef: StorageReference = FirebaseStorage.getInstance()
+                .reference.child(
+                    "USER_IMAGE" + System.currentTimeMillis() +
+                            "." + Constants.getFileExtension(this, mSelectedImageFileUri)
+                )
 
-    fun profileUpdateSuccess(){
+            sRef.putFile(mSelectedImageFileUri!!)
+                .addOnSuccessListener { taskSnapshot ->
+                    Log.i(
+                        "Firebase Image Url",
+                        taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
+                    )
+
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
+                        Log.e("Downloadable Image Url", uri.toString())
+                        mProfileImageURL = uri.toString()
+                        updateUserProfileData()
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this@MyProfileActivity, exception.message, Toast.LENGTH_SHORT)
+                        .show()
+                    hideProgressDialogue()
+                }
+        }
+    }
+
+    fun profileUpdateSuccess() {
         hideProgressDialogue()
         setResult(Activity.RESULT_OK)
         finish()
     }
+
+
 }

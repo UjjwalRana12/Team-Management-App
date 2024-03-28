@@ -53,7 +53,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         rv_boards_list=findViewById(R.id.rv_boards_list)
         tv_no_boards_available=findViewById(R.id.tv_no_boards_available)
         val headerView = navView.getHeaderView(0)
-      // toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
+        // toolbar_main_activity = findViewById(R.id.toolbar_mainActivity)
 
 
         nav_view=findViewById(R.id.nav_view)
@@ -142,7 +142,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         val drawer_layout = findViewById<DrawerLayout>(R.id.drawer_layout)
         when(item.itemId){
             R.id.nav_my_profile->{
-              //  Toast.makeText(this@MainActivity,"My Profile", Toast.LENGTH_SHORT).show()
+                //  Toast.makeText(this@MainActivity,"My Profile", Toast.LENGTH_SHORT).show()
                 startActivityForResult(
                     Intent(this,MyProfileActivity::class.java),
                     MY_PROFILE_REQUEST_CODE)
@@ -155,30 +155,30 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
                 finish()
             }
 
-    }
+        }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
-}
-
-fun updateNavigationUserDetails(user: User,readBoardsList: Boolean){
-
-    mUserName=user.name
-
-    Glide
-        .with(this)
-        .load(user.image)
-        .centerCrop()
-        .placeholder(R.drawable.profile)
-        .into(nav_user_image);
-
-    tv_username.text=user.name
-
-    if(readBoardsList){
-        showProgressDialogue("please wait...")
-        FirestoreClass().getBoardsList(this)
     }
 
-}
+    fun updateNavigationUserDetails(user: User,readBoardsList: Boolean){
+
+        mUserName=user.name
+
+        Glide
+            .with(this)
+            .load(user.image)
+            .centerCrop()
+            .placeholder(R.drawable.profile)
+            .into(nav_user_image);
+
+        tv_username.text=user.name
+
+        if(readBoardsList){
+            showProgressDialogue("please wait...")
+            FirestoreClass().getBoardsList(this)
+        }
+
+    }
 
 
 }

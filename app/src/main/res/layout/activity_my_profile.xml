@@ -39,43 +39,45 @@
             android:background="@color/white"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:background="@drawable/profile"
-                android:id="@+id/iv_profile_user_image"
+            <FrameLayout
+                android:id="@+id/profile_image_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:clickable="true"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:elevation="15dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintStart_toStartOf="@+id/iv_profile_user_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_profile_user_image">
+
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/et_name_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="32dp"
                 android:ems="10"
-                android:textColor="@color/text_color_secondary"
-                android:inputType="text"
                 android:hint="Name"
+                android:inputType="text"
+                android:textColor="@color/text_color_secondary"
                 app:layout_constraintEnd_toEndOf="@+id/iv_profile_user_image"
+                app:layout_constraintHorizontal_bias="0.481"
                 app:layout_constraintStart_toStartOf="@+id/iv_profile_user_image"
-                app:layout_constraintTop_toBottomOf="@+id/iv_profile_user_image" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile_user_image"
+                tools:ignore="MissingConstraints" />
 
             <EditText
                 android:id="@+id/et_email_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color_secondary"
+                android:layout_marginTop="32dp"
 
-                android:layout_marginTop="40dp"
                 android:ems="10"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:inputType="textEmailAddress"
                 android:hint="Email Is Fixed"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/text_color_secondary"
 
                 app:layout_constraintEnd_toEndOf="@+id/et_name_pro"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -86,11 +88,11 @@
                 android:id="@+id/et_phone_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 android:ems="10"
-                android:textColor="@color/text_color_secondary"
+                android:hint="Phone Number"
                 android:inputType="phone"
-               android:hint="Phone Number"
+                android:textColor="@color/text_color_secondary"
                 app:layout_constraintEnd_toEndOf="@+id/et_email_pro"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/et_email_pro"
@@ -100,12 +102,25 @@
                 android:id="@+id/btn_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:text="UPDATE"
+                android:layout_marginTop="40dp"
                 android:backgroundTint="@color/color_primary"
+                android:text="UPDATE"
                 app:layout_constraintEnd_toEndOf="@+id/et_phone_pro"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/et_phone_pro"
                 app:layout_constraintTop_toBottomOf="@+id/et_phone_pro" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_user_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="36dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
